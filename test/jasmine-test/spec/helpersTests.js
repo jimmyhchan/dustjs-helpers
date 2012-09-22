@@ -189,6 +189,20 @@ var helpersTests = [
     message: "eq helper matching string case"
   },
   {
+    name:     "eq helper for boolean true value",
+    source:   "{@eq key=\"{foo}\" type=\"boolean\" value=\"false\"}true is false {:else} true is not false{/eq}",
+    context:  {foo: true},
+    expected: "true is not false",
+    message: "eq helper for boolean true value"
+  },
+  {
+    name:     "eq helper for boolean false value",
+    source:   "{@eq key=\"{foo}\" type=\"boolean\" value=\"false\"}false is false {:else} false is not false{/eq}",
+    context:  {foo: false},
+    expected: "false is false",
+    message: "eq helper for boolean false value"
+  },
+  {
     name:     "eq helper non matching string case",
     source:   "{@eq key=\"foo\" value=\"bar\"}equal{:else}bar{/eq}",
     context:  {},
