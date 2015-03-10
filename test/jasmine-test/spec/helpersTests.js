@@ -994,18 +994,15 @@
         message: "should test that the current context is still accessible within the select"
       },
       {
-        name: "select helper doesn't destroy current context, and looks all over the place",
-        source: '{#test}{@select key=foo}{@eq value="{.bar_ref}"}{outside_name}{/eq}{/select}{/test}',
-        context: {
-          "outside_name": "Right",
-          "test": {
-            "foo": "bar",
-            "bar_ref": "bar",
-            "name": "inside name"
-          }
-        },
-        expected: "Right",
-        message: "should test that the current context is still accessible within the select"
+        name:     "select helper inside a array reaching outside",
+        source:   ["{#skills}{@select key=\"{.}\"}",
+                   "{@eq value=\"java\"}JAVA {outside},{/eq}",
+                   "{@eq value=\"js\"}JS {outside},{/eq}",
+                   "{@default value=\"foo\"}UNKNOWN {outside}{/default}",
+                   "{/select}{/skills}"].join("\n"),
+        context:  { "skills" : [ "java", "js" , "unknown"], "outside": 'foo' },
+        expected: "JAVA foo,JS foo,UNKNOWN foo",
+        message: "should test select helper inside a array with {.} and reaches outside"
       }
     ]
   },
